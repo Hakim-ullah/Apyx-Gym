@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX GYM — Forge Your Legend</title>
+  <meta name="description" content="World-class luxury fitness gym. Elite coaching, cinematic facilities, zero limits." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-bg"></div>
+    <div class="loader-content">
+      <div class="loader-logo">
+        <svg viewBox="0 0 280 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ff2d2d"/>
+              <stop offset="100%" stop-color="#ff6b00"/>
+            </linearGradient>
+          </defs>
+          <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle"
+                font-family="'Bebas Neue', sans-serif" font-size="68" fill="url(#lg1)"
+                letter-spacing="10">APEX</text>
+        </svg>
+        <div class="loader-line"></div>
+        <p class="loader-sub">FORGE YOUR LEGEND</p>
+      </div>
+      <div class="loader-progress-wrap">
+        <div class="loader-progress"><div class="loader-fill" id="loaderFill"></div></div>
+        <span class="loader-pct" id="loaderPct">0%</span>
+      </div>
+    </div>
+    <div class="loader-corners">
+      <span class="lc tl"></span><span class="lc tr"></span>
+      <span class="lc bl"></span><span class="lc br"></span>
+    </div>
+  </div>
+
+  <!-- CUSTOM CURSOR -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- SCROLL PROGRESS -->
+  <div id="scroll-bar"></div>
+
+  <!-- BACK TO TOP -->
+  <button id="btt" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- SUCCESS MODAL -->
+  <div id="modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Success">
+    <div class="modal-card">
+      <div class="modal-icon-wrap">
+        <svg class="check-svg" viewBox="0 0 52 52">
+          <circle class="check-circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="check-path" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+      </div>
+      <h3>You're In! 💪</h3>
+      <p>Your request has been successfully sent! Our team will contact you within 24 hours. Get ready to transform.</p>
+      <button class="btn btn-fire modal-close" id="modalClose">Let's Go!</button>
+      <div class="modal-timer"><div class="modal-timer-fill" id="modalFill"></div></div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav-brand">APEX<span>GYM</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#classes">Classes</a></li>
+      <li><a href="#trainers">Trainers</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#bmi">BMI</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#pricing" class="btn btn-fire nav-join">Join Now</a>
+    <button class="hamburger" id="ham" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <button class="mobile-nav-close" id="mobileClose" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#classes">Classes</a></li>
+      <li><a href="#trainers">Trainers</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#bmi">BMI</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#pricing" class="btn btn-fire" style="width: 150px; border-radius: 20px; text-align: center;">Join Now</a>
+  </div>
+
+  <!-- HERO -->
+  <!-- FIXED: removed inline style="margin-left: -400px" that shifted hero off-screen -->
+  <section id="hero">
+    <canvas id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-video-wrap" aria-hidden="true">
+      <img
+        src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=80"
+        alt=""
+        class="hero-bg-img"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+
+    <div class="hero-content container" style="margin-left: 50px; margin-top: -30px;">
+      <div class="hero-tag" id="heroTag">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        Now Enrolling · 2025
+      </div>
+
+      <!-- FIXED: removed inline width:200px and the broken absolute/margin hacks on .word.accent -->
+      <h1 class="hero-title" id="heroTitle" style="font-size: 120px;">
+        <span class="word" data-word="FORGE" >FORGE                 <span class="word accent" data-word="YOUR" style="display: inline;">  YOUR</span>  </span>
+
+        <span class="word" data-word="LEGEND">LEGEND</span>
+      </h1>
+
+      <p class="hero-desc" id="heroDesc">
+        World-class facilities. Elite coaching. Zero limits.<br/>
+        Your transformation begins the moment you walk in.
+      </p>
+
+      <div class="hero-ctas" id="heroCTAs">
+        <a href="#pricing" class="btn btn-fire magnetic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="5 12 12 5 19 12"/><line x1="12" y1="5" x2="12" y2="19"/></svg>
+          Start Today
+        </a>
+        <a href="#classes" class="btn btn-ghost magnetic">Explore Classes</a>
+      </div>
+
+      <div class="hero-stats" id="heroStats">
+        <div class="stat">
+          <span class="stat-n">12K+</span>
+          <span class="stat-l">Members</span>
+        </div>
+        <div class="stat-div" aria-hidden="true"></div>
+        <div class="stat">
+          <span class="stat-n">98%</span>
+          <span class="stat-l">Satisfaction</span>
+        </div>
+        <div class="stat-div" aria-hidden="true"></div>
+        <div class="stat">
+          <span class="stat-n">50+</span>
+          <span class="stat-l">Programs</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#about" class="scroll-down" aria-label="Scroll to About section">
+      <div class="sd-mouse" aria-hidden="true"><div class="sd-wheel"></div></div>
+      <span>Scroll</span>
+    </a>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner container">
+      <div class="about-visual reveal-left">
+        <div class="about-img-frame">
+          <img
+            src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80"
+            alt="Elite gym training"
+            loading="lazy"
+            class="about-img"
+          />
+          <div class="about-img-overlay" aria-hidden="true"></div>
+          <div class="about-float-badge" aria-label="15 Years of Excellence">
+            <span class="fb-num">15</span>
+            <span class="fb-txt">Years of<br/>Excellence</span>
+          </div>
+          <div class="about-deco-corner tl" aria-hidden="true"></div>
+          <div class="about-deco-corner br" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="about-text reveal-right">
+        <p class="label">Who We Are</p>
+        <h2 class="section-title">Built For <em>Champions</em><br/>By Champions</h2>
+        <p class="about-desc">At APEX GYM, we don't just build bodies — we forge identities. Our philosophy is rooted in the belief that physical excellence is the foundation of every other kind of greatness. Whether you're a beginner or elite athlete, our coaches are ready to push you beyond every limit.</p>
+
+        <div class="counters">
+          <div class="counter-box">
+            <div class="c-val"><span class="counter" data-target="12000">0</span><span>+</span></div>
+            <p>Active Members</p>
+          </div>
+          <div class="counter-box">
+            <div class="c-val"><span class="counter" data-target="48">0</span></div>
+            <p>Expert Trainers</p>
+          </div>
+          <div class="counter-box">
+            <div class="c-val"><span class="counter" data-target="50">0</span><span>+</span></div>
+            <p>Weekly Classes</p>
+          </div>
+          <div class="counter-box">
+            <div class="c-val"><span class="counter" data-target="15">0</span><span>yr</span></div>
+            <p>In Business</p>
+          </div>
+        </div>
+        <a href="#services" class="btn btn-fire">Explore Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">What We Offer</p>
+        <h2 class="section-title">Elite <em>Services</em></h2>
+        <p class="section-desc">Everything you need under one roof — engineered for results.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card" data-tilt>
+          <div class="sc-num" aria-hidden="true">01</div>
+          <div class="sc-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="22" width="40" height="4" rx="2" fill="currentColor"/><rect x="2" y="18" width="8" height="12" rx="4" fill="currentColor" opacity=".5"/><rect x="38" y="18" width="8" height="12" rx="4" fill="currentColor" opacity=".5"/></svg>
+          </div>
+          <h3>Strength Training</h3>
+          <p>Heavy iron, world-class equipment, and programming that actually works. Build power. Build mass. Build legacy.</p>
+          <a href="#contact" class="sc-cta">Get Started <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="service-card" data-tilt>
+          <div class="sc-num" aria-hidden="true">02</div>
+          <div class="sc-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 8C24 8 10 16 10 28a14 14 0 0028 0C38 16 24 8 24 8z" stroke="currentColor" stroke-width="2.5"/><path d="M24 20v12M18 26l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Cardio Programs</h3>
+          <p>Heart-pounding routines with a science-backed approach. Burn fat, improve endurance, and feel alive again.</p>
+          <a href="#contact" class="sc-cta">Get Started <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="service-card" data-tilt>
+          <div class="sc-num" aria-hidden="true">03</div>
+          <div class="sc-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="12" r="6" fill="currentColor" opacity=".7"/><path d="M12 36c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Personal Training</h3>
+          <p>1-on-1 sessions with elite certified coaches who tailor every workout to your biology, goals, and limits.</p>
+          <a href="#contact" class="sc-cta">Get Started <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="service-card" data-tilt>
+          <div class="sc-num" aria-hidden="true">04</div>
+          <div class="sc-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="8" stroke="currentColor" stroke-width="2.5"/><path d="M16 24h16M24 16v16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Group Classes</h3>
+          <p>Train with a tribe. 50+ weekly classes from HIIT to yoga. Community energy that makes limits disappear.</p>
+          <a href="#contact" class="sc-cta">Get Started <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="service-card" data-tilt>
+          <div class="sc-num" aria-hidden="true">05</div>
+          <div class="sc-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 4L6 14v20l18 10 18-10V14L24 4z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 4v30M6 14l18 10 18-10" stroke="currentColor" stroke-width="2"/></svg>
+          </div>
+          <h3>Nutrition Coaching</h3>
+          <p>Performance nutrition designed for your body type and goals. Fuel smarter. Recover faster. Grow stronger.</p>
+          <a href="#contact" class="sc-cta">Get Started <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="service-card" data-tilt>
+          <div class="sc-num" aria-hidden="true">06</div>
+          <div class="sc-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 44s-16-8-16-20a16 16 0 0132 0C40 36 24 44 24 44z" stroke="currentColor" stroke-width="2.5"/><circle cx="24" cy="24" r="4" fill="currentColor" opacity=".6"/></svg>
+          </div>
+          <h3>Recovery Suite</h3>
+          <p>Ice baths, saunas, massage therapy, and cryotherapy. Champions know recovery is training too.</p>
+          <a href="#contact" class="sc-cta">Get Started <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY STRIP -->
+  <section id="gallery" aria-label="Photo gallery">
+    <div class="gallery-strip">
+      <div class="gallery-track" id="galleryTrack" aria-hidden="true">
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=75" alt="" loading="lazy"/><div class="gi-overlay"><span>Strength</span></div></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=75" alt="" loading="lazy"/><div class="gi-overlay"><span>Conditioning</span></div></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=75" alt="" loading="lazy"/><div class="gi-overlay"><span>Power</span></div></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&q=75" alt="" loading="lazy"/><div class="gi-overlay"><span>Cardio</span></div></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=75" alt="" loading="lazy"/><div class="gi-overlay"><span>Combat</span></div></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=75" alt="" loading="lazy"/><div class="gi-overlay"><span>Recovery</span></div></div>
+        <!-- Duplicates for seamless loop -->
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=75" alt="" loading="lazy"/><div class="gi-overlay"><span>Strength</span></div></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=75" alt="" loading="lazy"/><div class="gi-overlay"><span>Conditioning</span></div></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=75" alt="" loading="lazy"/><div class="gi-overlay"><span>Power</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLASSES -->
+  <section id="classes">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">Train Harder</p>
+        <h2 class="section-title">Our <em>Classes</em></h2>
+        <p class="section-desc">Find your discipline. Master your domain.</p>
+      </div>
+
+      <div class="tab-bar" role="tablist" aria-label="Class categories">
+        <button class="tab active" data-tab="strength" role="tab" aria-selected="true" aria-controls="tab-strength">Strength</button>
+        <button class="tab" data-tab="cardio" role="tab" aria-selected="false" aria-controls="tab-cardio">Cardio</button>
+        <button class="tab" data-tab="mind" role="tab" aria-selected="false" aria-controls="tab-mind">Mind & Body</button>
+        <button class="tab" data-tab="combat" role="tab" aria-selected="false" aria-controls="tab-combat">Combat</button>
+      </div>
+
+      <div class="tab-content">
+        <div class="tab-panel active" id="tab-strength" role="tabpanel">
+          <div class="class-grid">
+            <div class="class-card"><div class="cc-badge red">Advanced</div><div class="cc-time">Mon · Wed · Fri · 6AM</div><h4>Olympic Lifting</h4><p>Master the snatch and clean & jerk under expert guidance. Pure power, perfect form.</p><div class="cc-foot"><span>60 min</span><span>Max 12</span></div></div>
+            <div class="class-card"><div class="cc-badge blue">Intermediate</div><div class="cc-time">Tue · Thu · 7AM · 6PM</div><h4>Powerlifting Club</h4><p>Squat, bench, deadlift. Progressive overload programming that delivers real results.</p><div class="cc-foot"><span>75 min</span><span>Max 16</span></div></div>
+            <div class="class-card"><div class="cc-badge green">Beginner</div><div class="cc-time">Daily · 8AM · 5PM</div><h4>Iron Foundations</h4><p>Learn to lift safely and effectively. The essential class for every new member.</p><div class="cc-foot"><span>45 min</span><span>Open</span></div></div>
+            <div class="class-card"><div class="cc-badge red">Elite</div><div class="cc-time">Sat · Sun · 9AM</div><h4>Strongman Weekend</h4><p>Atlas stones, yoke carries, farmer's walks. Test your true strength potential.</p><div class="cc-foot"><span>90 min</span><span>Max 8</span></div></div>
+          </div>
+        </div>
+        <div class="tab-panel" id="tab-cardio" role="tabpanel" hidden>
+          <div class="class-grid">
+            <div class="class-card"><div class="cc-badge red">Intense</div><div class="cc-time">Mon · Wed · Fri · 5:30AM</div><h4>Inferno HIIT</h4><p>Maximum calorie burn in minimum time. Interval training that redefines your limits.</p><div class="cc-foot"><span>45 min</span><span>Max 20</span></div></div>
+            <div class="class-card"><div class="cc-badge blue">Moderate</div><div class="cc-time">Tue · Thu · Sat · 7AM</div><h4>Spin Surge</h4><p>High-energy cycling with immersive audio. Burn 600+ calories per session.</p><div class="cc-foot"><span>50 min</span><span>Max 24</span></div></div>
+            <div class="class-card"><div class="cc-badge green">All Levels</div><div class="cc-time">Daily · 6AM · 6PM</div><h4>Endurance Run</h4><p>Treadmill-based endurance programming. Build your aerobic base systematically.</p><div class="cc-foot"><span>40 min</span><span>Open</span></div></div>
+            <div class="class-card"><div class="cc-badge red">Advanced</div><div class="cc-time">Sat · 8AM</div><h4>MetCon Madness</h4><p>Metabolic conditioning at its most brutal. Not for the faint-hearted.</p><div class="cc-foot"><span>60 min</span><span>Max 10</span></div></div>
+          </div>
+        </div>
+        <div class="tab-panel" id="tab-mind" role="tabpanel" hidden>
+          <div class="class-grid">
+            <div class="class-card"><div class="cc-badge green">Restorative</div><div class="cc-time">Daily · 7AM · 7PM</div><h4>Power Yoga</h4><p>Strength meets flexibility. Build a body that's powerful inside and out.</p><div class="cc-foot"><span>60 min</span><span>Max 18</span></div></div>
+            <div class="class-card"><div class="cc-badge blue">All Levels</div><div class="cc-time">Wed · Fri · Sun · 6AM</div><h4>Mindful Movement</h4><p>Pilates-inspired mobility and control. Recover, realign, and recalibrate.</p><div class="cc-foot"><span>50 min</span><span>Max 14</span></div></div>
+            <div class="class-card"><div class="cc-badge green">Beginner</div><div class="cc-time">Tue · Thu · 6PM</div><h4>Breathwork</h4><p>Controlled breathing, meditation, and guided recovery. Train your nervous system.</p><div class="cc-foot"><span>40 min</span><span>Open</span></div></div>
+            <div class="class-card"><div class="cc-badge blue">Intermediate</div><div class="cc-time">Sat · Sun · 8AM</div><h4>Athletic Stretch</h4><p>Active and passive stretching for serious athletes. Prevent injury, perform better.</p><div class="cc-foot"><span>45 min</span><span>Max 16</span></div></div>
+          </div>
+        </div>
+        <div class="tab-panel" id="tab-combat" role="tabpanel" hidden>
+          <div class="class-grid">
+            <div class="class-card"><div class="cc-badge red">Intense</div><div class="cc-time">Mon · Wed · Fri · 7PM</div><h4>Boxing Fundamentals</h4><p>Footwork, combos, and heavy bag work. Train like a fighter, look like one too.</p><div class="cc-foot"><span>60 min</span><span>Max 16</span></div></div>
+            <div class="class-card"><div class="cc-badge red">Advanced</div><div class="cc-time">Tue · Thu · 7:30PM</div><h4>Muay Thai</h4><p>Eight-limb striking, clinch work, pad rounds. The art of eight weapons.</p><div class="cc-foot"><span>75 min</span><span>Max 12</span></div></div>
+            <div class="class-card"><div class="cc-badge blue">Intermediate</div><div class="cc-time">Mon · Wed · 6PM</div><h4>Kickboxing Cardio</h4><p>Combat-inspired high intensity training. Burn fat while learning real striking.</p><div class="cc-foot"><span>50 min</span><span>Max 20</span></div></div>
+            <div class="class-card"><div class="cc-badge green">Beginner</div><div class="cc-time">Sat · 10AM</div><h4>Combat Basics</h4><p>New to fighting arts? This is your starting point. Safe, structured, and powerful.</p><div class="cc-foot"><span>60 min</span><span>Open</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINERS -->
+  <section id="trainers">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">The Elite</p>
+        <h2 class="section-title">Meet Your <em>Coaches</em></h2>
+        <p class="section-desc">World-class trainers who live what they teach.</p>
+      </div>
+      <div class="trainers-grid">
+
+        <div class="trainer-card reveal-up">
+          <div class="tc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=600&q=75" alt="Marcus Rivera — Head of Strength & Conditioning" loading="lazy"/>
+            <div class="tc-overlay" aria-hidden="true">
+              <div class="tc-socials">
+                <a href="#" aria-label="Marcus Rivera on Instagram" class="ts-link">IG</a>
+                <a href="#" aria-label="Marcus Rivera on Twitter" class="ts-link">TW</a>
+                <a href="#" aria-label="Marcus Rivera on LinkedIn" class="ts-link">LI</a>
+              </div>
+              <a href="#contact" class="btn btn-fire btn-sm">Book Session</a>
+            </div>
+          </div>
+          <div class="tc-info">
+            <h3>Marcus Rivera</h3>
+            <p class="tc-role">Head of Strength & Conditioning</p>
+            <div class="tc-tags"><span>Powerlifting</span><span>Olympic Lifting</span></div>
+            <div class="tc-stats">
+              <div><strong>12yr</strong><small>Experience</small></div>
+              <div><strong>340+</strong><small>Clients</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trainer-card reveal-up" style="--delay:0.1s">
+          <div class="tc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=600&q=75" alt="Jade Kim — Combat & HIIT Specialist" loading="lazy"/>
+            <div class="tc-overlay" aria-hidden="true">
+              <div class="tc-socials">
+                <a href="#" aria-label="Jade Kim on Instagram" class="ts-link">IG</a>
+                <a href="#" aria-label="Jade Kim on Twitter" class="ts-link">TW</a>
+              </div>
+              <a href="#contact" class="btn btn-fire btn-sm">Book Session</a>
+            </div>
+          </div>
+          <div class="tc-info">
+            <h3>Jade Kim</h3>
+            <p class="tc-role">Combat & HIIT Specialist</p>
+            <div class="tc-tags"><span>Muay Thai</span><span>HIIT</span></div>
+            <div class="tc-stats">
+              <div><strong>8yr</strong><small>Experience</small></div>
+              <div><strong>220+</strong><small>Clients</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trainer-card reveal-up" style="--delay:0.2s">
+          <div class="tc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?w=600&q=75" alt="Alex Torres — Nutrition & Body Transformation" loading="lazy"/>
+            <div class="tc-overlay" aria-hidden="true">
+              <div class="tc-socials">
+                <a href="#" aria-label="Alex Torres on Instagram" class="ts-link">IG</a>
+                <a href="#" aria-label="Alex Torres on YouTube" class="ts-link">YT</a>
+              </div>
+              <a href="#contact" class="btn btn-fire btn-sm">Book Session</a>
+            </div>
+          </div>
+          <div class="tc-info">
+            <h3>Alex Torres</h3>
+            <p class="tc-role">Nutrition & Body Transformation</p>
+            <div class="tc-tags"><span>Nutrition</span><span>Fat Loss</span></div>
+            <div class="tc-stats">
+              <div><strong>10yr</strong><small>Experience</small></div>
+              <div><strong>500+</strong><small>Clients</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trainer-card reveal-up" style="--delay:0.3s">
+          <div class="tc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1518644961665-ed172691aaa1?w=600&q=75" alt="Sofia Lopes — Yoga & Recovery Expert" loading="lazy"/>
+            <div class="tc-overlay" aria-hidden="true">
+              <div class="tc-socials">
+                <a href="#" aria-label="Sofia Lopes on Instagram" class="ts-link">IG</a>
+                <a href="#" aria-label="Sofia Lopes on Twitter" class="ts-link">TW</a>
+              </div>
+              <a href="#contact" class="btn btn-fire btn-sm">Book Session</a>
+            </div>
+          </div>
+          <div class="tc-info">
+            <h3>Sofia Lopes</h3>
+            <p class="tc-role">Yoga & Recovery Expert</p>
+            <div class="tc-tags"><span>Yoga</span><span>Mobility</span></div>
+            <div class="tc-stats">
+              <div><strong>9yr</strong><small>Experience</small></div>
+              <div><strong>280+</strong><small>Clients</small></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">Real Results</p>
+        <h2 class="section-title">What Members <em>Say</em></h2>
+      </div>
+    </div>
+    <div class="testi-outer" role="region" aria-label="Member testimonials">
+      <div class="testi-track" id="testiTrack">
+        <div class="testi-card"><div class="testi-stars" aria-label="5 stars">★★★★★</div><p>"APEX changed my life completely. In 6 months I lost 32 lbs and built more muscle than I ever had. The coaches here genuinely care about your success."</p><div class="testi-meta"><div class="testi-av" aria-hidden="true">DW</div><div><strong>Derek W.</strong><span>Lost 32 lbs in 6 months</span></div></div></div>
+        <div class="testi-card"><div class="testi-stars" aria-label="5 stars">★★★★★</div><p>"I've trained at gyms across three continents. APEX stands completely alone. The equipment, the energy, the community — nothing comes close."</p><div class="testi-meta"><div class="testi-av" aria-hidden="true">AL</div><div><strong>Anya L.</strong><span>Member since 2021</span></div></div></div>
+        <div class="testi-card"><div class="testi-stars" aria-label="5 stars">★★★★★</div><p>"Marcus helped me hit a 500lb deadlift after just 18 months. The programming is next level. If you're serious about strength, this is the only gym."</p><div class="testi-meta"><div class="testi-av" aria-hidden="true">BK</div><div><strong>Ben K.</strong><span>Powerlifting champion</span></div></div></div>
+        <div class="testi-card"><div class="testi-stars" aria-label="5 stars">★★★★★</div><p>"As a busy professional, I needed efficiency. APEX delivers more results in 3 sessions/week than I was getting in 6 elsewhere. My body at 42 is better than at 25."</p><div class="testi-meta"><div class="testi-av" aria-hidden="true">RM</div><div><strong>Rachel M.</strong><span>Executive, 42 years old</span></div></div></div>
+        <div class="testi-card"><div class="testi-stars" aria-label="5 stars">★★★★★</div><p>"The nutrition coaching combined with training transformed my relationship with my body. Down 48 lbs, energy levels through the roof."</p><div class="testi-meta"><div class="testi-av" aria-hidden="true">JT</div><div><strong>James T.</strong><span>Transformation: 48 lbs lost</span></div></div></div>
+      </div>
+    </div>
+    <div class="testi-controls" role="group" aria-label="Testimonial navigation">
+      <button id="testiPrev" aria-label="Previous testimonial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="testi-dots" id="testiDots" role="group" aria-label="Testimonial position"></div>
+      <button id="testiNext" aria-label="Next testimonial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">Simple Pricing</p>
+        <h2 class="section-title">Choose Your <em>Plan</em></h2>
+        <p class="section-desc">No hidden fees. No contracts. Cancel anytime.</p>
+      </div>
+
+      <div class="billing-toggle" role="group" aria-label="Billing period">
+        <span class="bt-label">Monthly</span>
+        <label class="toggle-wrap" aria-label="Switch to annual billing">
+          <input type="checkbox" id="billingToggle"/>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+        <span class="bt-label">Annual <span class="save-chip">Save 20%</span></span>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card reveal-up">
+          <div class="pc-tier">Starter</div>
+          <div class="pc-price">
+            <span class="pc-curr">$</span>
+            <span class="pc-amt" data-m="49" data-a="39">49</span>
+            <span class="pc-per">/mo</span>
+          </div>
+          <p class="pc-desc">Perfect for beginners starting their fitness journey.</p>
+          <ul class="pc-features">
+            <li class="yes">Gym Floor Access</li>
+            <li class="yes">2 Group Classes/Week</li>
+            <li class="yes">Locker Room Access</li>
+            <li class="yes">App & Progress Tracking</li>
+            <li class="no">Personal Training</li>
+            <li class="no">Nutrition Coaching</li>
+          </ul>
+          <a href="#contact" class="btn btn-ghost btn-full">Get Started</a>
+        </div>
+
+        <div class="pricing-card featured reveal-up" style="--delay:0.1s">
+          <div class="pc-hot">Most Popular</div>
+          <div class="pc-tier">Elite</div>
+          <div class="pc-price">
+            <span class="pc-curr">$</span>
+            <span class="pc-amt" data-m="99" data-a="79">99</span>
+            <span class="pc-per">/mo</span>
+          </div>
+          <p class="pc-desc">For athletes serious about results and community.</p>
+          <ul class="pc-features">
+            <li class="yes">Unlimited Gym Access</li>
+            <li class="yes">Unlimited Group Classes</li>
+            <li class="yes">4 Personal Sessions/Mo</li>
+            <li class="yes">Nutrition Plan Included</li>
+            <li class="yes">Priority Booking</li>
+            <li class="no">VIP Lounge Access</li>
+          </ul>
+          <a href="#contact" class="btn btn-fire btn-full">Get Started</a>
+        </div>
+
+        <div class="pricing-card reveal-up" style="--delay:0.2s">
+          <div class="pc-tier">Legend</div>
+          <div class="pc-price">
+            <span class="pc-curr">$</span>
+            <span class="pc-amt" data-m="199" data-a="159">199</span>
+            <span class="pc-per">/mo</span>
+          </div>
+          <p class="pc-desc">The ultimate experience for those who demand the best.</p>
+          <ul class="pc-features">
+            <li class="yes">Everything in Elite</li>
+            <li class="yes">Unlimited 1-on-1 Coaching</li>
+            <li class="yes">Custom Meal Plans</li>
+            <li class="yes">VIP Lounge Access</li>
+            <li class="yes">Guest Passes (4/mo)</li>
+            <li class="yes">Recovery Suite Access</li>
+          </ul>
+          <a href="#contact" class="btn btn-ghost btn-full">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BMI CALCULATOR -->
+  <section id="bmi">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">Fitness Tools</p>
+        <h2 class="section-title">BMI <em>Calculator</em></h2>
+        <p class="section-desc">Get your instant body mass index and personalized fitness insights.</p>
+      </div>
+      <div class="bmi-layout">
+        <div class="bmi-form reveal-left">
+          <div class="unit-toggle" role="group" aria-label="Unit system">
+            <button class="unit-btn active" data-unit="metric">Metric (kg/cm)</button>
+            <button class="unit-btn" data-unit="imperial">Imperial (lb/in)</button>
+          </div>
+          <div class="bmi-fields">
+            <div class="bmi-field">
+              <label for="bmiWeight">Weight</label>
+              <div class="bmi-input">
+                <input type="number" id="bmiWeight" placeholder="70" min="1" max="500" aria-label="Weight"/>
+                <span class="unit-tag" id="wUnit" aria-hidden="true">kg</span>
+              </div>
+            </div>
+            <div class="bmi-field">
+              <label for="bmiHeight">Height</label>
+              <div class="bmi-input">
+                <input type="number" id="bmiHeight" placeholder="175" min="1" max="300" aria-label="Height"/>
+                <span class="unit-tag" id="hUnit" aria-hidden="true">cm</span>
+              </div>
+            </div>
+            <div class="bmi-field">
+              <label for="bmiAge">Age</label>
+              <div class="bmi-input">
+                <input type="number" id="bmiAge" placeholder="25" min="1" max="120" aria-label="Age"/>
+                <span class="unit-tag" aria-hidden="true">yr</span>
+              </div>
+            </div>
+            <div class="bmi-field">
+              <label>Gender</label>
+              <div class="gender-row" role="group" aria-label="Gender">
+                <button class="gender-btn active" data-g="male" aria-pressed="true">Male</button>
+                <button class="gender-btn" data-g="female" aria-pressed="false">Female</button>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-fire btn-full" id="calcBmi">Calculate BMI</button>
+        </div>
+
+        <div class="bmi-result reveal-right" id="bmiResult" aria-live="polite">
+          <svg class="bmi-gauge" viewBox="0 0 200 120" aria-hidden="true">
+            <defs>
+              <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#22c55e"/>
+                <stop offset="35%" stop-color="#eab308"/>
+                <stop offset="65%" stop-color="#f97316"/>
+                <stop offset="100%" stop-color="#ef4444"/>
+              </linearGradient>
+            </defs>
+            <path d="M20 100 A80 80 0 0 1 180 100" stroke="rgba(255,255,255,0.06)" stroke-width="16" fill="none" stroke-linecap="round"/>
+            <path id="gaugeArc" d="M20 100 A80 80 0 0 1 180 100" stroke="url(#gaugeGrad)" stroke-width="16" fill="none" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251"/>
+            <line id="gaugeNeedle" x1="100" y1="100" x2="100" y2="28" stroke="white" stroke-width="2.5" stroke-linecap="round" style="transform-origin:100px 100px"/>
+            <circle cx="100" cy="100" r="5" fill="white"/>
+          </svg>
+          <div class="bmi-display">
+            <span class="bmi-num" id="bmiNum">--</span>
+            <span class="bmi-cat" id="bmiCat">Enter your data</span>
+          </div>
+          <div class="bmi-scale" aria-label="BMI scale reference">
+            <div class="bs-item green"><span>Underweight</span><span>&lt;18.5</span></div>
+            <div class="bs-item yellow"><span>Normal</span><span>18.5–24.9</span></div>
+            <div class="bs-item orange"><span>Overweight</span><span>25–29.9</span></div>
+            <div class="bs-item red"><span>Obese</span><span>≥30</span></div>
+          </div>
+          <div class="bmi-rec" id="bmiRec">Calculate your BMI to see personalized fitness recommendations.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">Got Questions</p>
+        <h2 class="section-title">Frequently <em>Asked</em></h2>
+      </div>
+      <div class="faq-list" role="list">
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false"><span>Do I need experience to join APEX?</span><div class="faq-icon" aria-hidden="true"><span></span><span></span></div></button>
+          <div class="faq-a"><p>Absolutely not. APEX welcomes members at every fitness level, from complete beginners to competitive athletes. Our Iron Foundations class is specifically designed for newcomers, and every coach is trained to meet you where you are and take you where you want to go.</p></div>
+        </div>
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false"><span>Can I cancel my membership anytime?</span><div class="faq-icon" aria-hidden="true"><span></span><span></span></div></button>
+          <div class="faq-a"><p>Yes. We operate on a no-contract basis. You can cancel your membership at any time with 30 days notice. No cancellation fees, no hidden clauses. We want you here because you want to be here.</p></div>
+        </div>
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false"><span>What are the gym operating hours?</span><div class="faq-icon" aria-hidden="true"><span></span><span></span></div></button>
+          <div class="faq-a"><p>We're open Monday–Friday from 5AM to 11PM, and Saturday–Sunday from 6AM to 10PM. Legend members also enjoy 24/7 keycard access to the main gym floor for those late-night or early-morning sessions.</p></div>
+        </div>
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false"><span>Is personal training included in the plans?</span><div class="faq-icon" aria-hidden="true"><span></span><span></span></div></button>
+          <div class="faq-a"><p>Personal training is included in our Elite plan (4 sessions/month) and Legend plan (unlimited sessions). Starter members can add personal training sessions at a discounted rate of $60/session.</p></div>
+        </div>
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false"><span>Do you offer nutrition coaching?</span><div class="faq-icon" aria-hidden="true"><span></span><span></span></div></button>
+          <div class="faq-a"><p>Yes. Nutrition coaching and custom meal plans are included in our Elite and Legend plans. Our head nutritionist Alex Torres holds dual certifications in sports nutrition and precision nutrition.</p></div>
+        </div>
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false"><span>Is there parking at the gym?</span><div class="faq-icon" aria-hidden="true"><span></span><span></span></div></button>
+          <div class="faq-a"><p>We have a dedicated parking structure attached to the building with 200+ spaces, including EV charging stations. Parking is complimentary for all APEX members.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">Get In Touch</p>
+        <h2 class="section-title">Start Your <em>Journey</em></h2>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-info reveal-left">
+          <div class="ci-row">
+            <div class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><strong>Find Us</strong><p>1234 Apex Blvd, Suite 100<br/>New York, NY 10001</p></div>
+          </div>
+          <div class="ci-row">
+            <div class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <div><strong>Call Us</strong><p>+1 (555) 000-0000</p></div>
+          </div>
+          <div class="ci-row">
+            <div class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><strong>Email Us</strong><p>hakimkhande@gmail.com</p></div>
+          </div>
+          <div class="ci-row">
+            <div class="ci-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><strong>Hours</strong><p>Mon–Fri: 5AM–11PM<br/>Sat–Sun: 6AM–10PM</p></div>
+          </div>
+          <div class="map-placeholder" aria-label="APEX GYM location map placeholder">
+            <div class="map-grid-bg" aria-hidden="true"></div>
+            <div class="map-pin-badge">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              APEX GYM · New York, NY
+            </div>
+          </div>
+        </div>
+
+        <form action="https://api.web3forms.com/submit" class="contact-form reveal-right" id="contactForm" novalidate aria-label="Contact form" method="post">
+          <input type="hidden" name="access_key" value="f0f52161-c5da-4c0b-b2e2-a8b1ae7651e5"/>
+          <input type="hidden" name="subject" value="New APEX GYM Inquiry"/>
+          <input type="hidden" name="from_name" value="APEX GYM Website"/>
+          <input type="hidden" name="source" value="Apex Gym Website"/>
+
+          <div class="form-row">
+            <div class="form-field">
+              <input type="text" id="fname" name="name" required placeholder=" " autocomplete="name"/>
+              <label for="fname">Full Name</label>
+              <span class="ferr" id="fnameErr" role="alert">Please enter your name</span>
+            </div>
+            <div class="form-field">
+              <input type="email" id="femail" name="email" required placeholder=" " autocomplete="email"/>
+              <label for="femail">Email Address</label>
+              <span class="ferr" id="femailErr" role="alert">Valid email required</span>
+            </div>
+          </div>
+          <div class="form-field">
+            <select id="fplan" name="plan" required>
+              <option value="" disabled selected></option>
+              <option value="starter">Starter Plan — $49/mo</option>
+              <option value="elite">Elite Plan — $99/mo</option>
+              <option value="legend">Legend Plan — $199/mo</option>
+              <option value="tour">Just Interested / Book a Tour</option>
+            </select>
+            <label for="fplan">Interested In</label> 
+          </div>
+          <div class="form-field">
+            <textarea id="fmsg" name="message" rows="4" required placeholder=" " aria-label="Your message"></textarea>
+            <label for="fmsg">Your Message</label>
+            <span class="ferr" id="fmsgErr" role="alert">Please enter a message</span>
+          </div>
+          <button type="submit" class="btn btn-fire btn-full magnetic" id="formSubmit">
+            <span id="btnTxt">Send Message</span>
+            <span id="btnSpin" style="display:none;" aria-label="Sending...">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="spin-anim" aria-hidden="true"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              Sending...
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-glow-line" aria-hidden="true"></div>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#hero" class="nav-brand">APEX<span>GYM</span></a>
+          <p>Forge your legend. Every rep. Every day.<br/>Excellence isn't a destination — it's a discipline.</p>
+          <div class="footer-socials">
+            <a href="https:www.instagram.com/hakimullah_dev" aria-label="APEX GYM on Instagram" class="fsoc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" aria-label="APEX GYM on Twitter" class="fsoc"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            <a href="#" aria-label="APEX GYM on YouTube" class="fsoc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20.05 12 20.05 12 20.05s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#classes">Classes</a></li>
+            <li><a href="#trainers">Trainers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Programs</h4>
+          <ul>
+            <li><a href="#classes">Strength</a></li>
+            <li><a href="#classes">Cardio</a></li>
+            <li><a href="#classes">Combat</a></li>
+            <li><a href="#classes">Mind & Body</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 APEX GYM. All rights reserved.</p>
+        <p>Forged with precision & passion.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
